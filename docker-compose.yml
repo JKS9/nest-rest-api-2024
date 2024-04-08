@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  api:
+    volumes:
+      - ./src:/app/src
+    build: .
+    ports:
+      - '${PORT}:3000'
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URL: 'mongodb://mongo:27017/data'
+      PORT: '3000'
+      VERSION_APP: '0.0.1'
+    networks:
+      - backend
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  mongodb_data:
