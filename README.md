@@ -17,6 +17,15 @@
 $ pnpm install
 ```
 
+## Environment variable
+
+```bash
+# create file .env
+PORT=3000
+VERSION_APP=0.0.1
+MONGO_URL="mongodb://127.0.0.1:27017/data"
+```
+
 ## Running the app
 
 ```bash
@@ -41,6 +50,16 @@ $ pnpm run test:e2e
 
 # test coverage
 $ pnpm run test:cov
+```
+
+## Docker
+
+```bash
+# Start project in docker
+$ docker compose up
+
+# Close project in docker
+$ docker compose down
 ```
 
 ## Stay in touch
