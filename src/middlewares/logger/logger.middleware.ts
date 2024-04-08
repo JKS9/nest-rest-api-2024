@@ -1,5 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, RequestParamHandler, RouterOptions} from 'express';
 import * as winston from 'winston';
 
 @Injectable()
@@ -12,11 +12,11 @@ export class LoggingMiddleware implements NestMiddleware {
       level: 'info', // Log level
       format: winston.format.combine(
         winston.format.timestamp(), // Add a timestamp to each log
-        winston.format.json() // JSON format for the logs
+        winston.format.json(), // JSON format for the logs
       ),
       transports: [
-        new winston.transports.Console() // Write logs to the console
-      ]
+        new winston.transports.Console(), // Write logs to the console
+      ],
     });
   }
 
@@ -26,7 +26,9 @@ export class LoggingMiddleware implements NestMiddleware {
     const startTime = Date.now();
 
     // Log request information
-    const requestInfo = `Request: ${method} ${originalUrl} - Query: ${JSON.stringify(query)} - Body: ${JSON.stringify(body)}`;
+    const requestInfo = `Request: ${method} ${originalUrl} - Query: ${JSON.stringify(
+      query,
+    )} - Body: ${JSON.stringify(body)}`;
     this.logger.info(requestInfo);
 
     // Log response information when the response is finished
