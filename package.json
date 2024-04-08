@@ -84,8 +84,7 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "pnpm run format",
-      "pnpm run lint",
-      "git add"
+      "pnpm run lint"
     ]
   }
 }
