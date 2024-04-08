@@ -62,6 +62,10 @@ $ docker compose up
 $ docker compose down
 ```
 
+## PostMan File
+- File - [Postman File](https://github.com/JKS9/nest-rest-api-2024/blob/main/postman/Perfect%20API.postman_collection.json)
+
+
 ## Stay in touch
 
 - Author - [Etienne Juzans](https://www.etiennejuz.com/)
