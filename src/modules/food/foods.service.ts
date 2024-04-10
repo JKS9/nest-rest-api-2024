@@ -12,8 +12,13 @@ export class FoodsService {
   constructor(@InjectModel(Foods.name) private FoodsModel: Model<Foods>) {}
 
   // Create a new food
-  async create(createDtoFood: CreateDtoFood) {
-    return new this.FoodsModel(createDtoFood).save();
+  async create(createDtoFood: CreateDtoFood, id: string) {
+    const newDoc = {
+      title: createDtoFood.title,
+      userId: id,
+    };
+
+    return new this.FoodsModel(newDoc).save();
   }
 
   // Update an existing food

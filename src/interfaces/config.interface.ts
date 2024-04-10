@@ -8,8 +8,8 @@ export interface IConfig {
   // The version of the application
   version: string;
   // Configuration related to the database
-  dataBase: {
-    // The URL of the database
-    url: string;
+  dataBase: string;
+  secretKey: {
+    key: string;
   };
 }

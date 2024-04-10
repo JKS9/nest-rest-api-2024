@@ -24,6 +24,7 @@ $ pnpm install
 PORT=3000
 VERSION_APP=0.0.1
 MONGO_URL="mongodb://127.0.0.1:27017/data"
+SECRETJWT="pwFmKSw4VNY&9qN"
 ```
 
 ## Running the app

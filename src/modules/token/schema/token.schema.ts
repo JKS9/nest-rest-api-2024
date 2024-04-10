@@ -1,11 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
-// Define the shape of the document for the Foods collection
+// Define the shape of the document for the Tokens collection
 @Schema({ timestamps: true, versionKey: false }) // Enable timestamps and disable version key
-export class Foods {
+export class Token {
   @Prop({ required: true }) // Define title property with required constraint
-  title: string; // Title of the food
+  refresh: string; // Title of the Token
+
+  @Prop({ expires: '6m' }) // Add expires option with 6 months TTL
+  createdAt: Date;
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
   userId: Types.ObjectId;
@@ -14,7 +17,7 @@ export class Foods {
 }
 
 // Create the Mongoose schema based on the Foods class
-export const FoodsSchema = SchemaFactory.createForClass(Foods);
+export const TokenSchema = SchemaFactory.createForClass(Token);
 
 // Define indexes for efficient querying
-FoodsSchema.index({ title: 1 }); // Index for efficient searching by title
+TokenSchema.index({ refresh: 1 }, { unique: true }); // Index for efficient searching by title

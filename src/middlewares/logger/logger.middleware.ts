@@ -1,9 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import {
-  Request,
-  Response,
-  NextFunction
-} from 'express';
+import { Request, Response, NextFunction } from 'express';
 import * as winston from 'winston';
 
 @Injectable()

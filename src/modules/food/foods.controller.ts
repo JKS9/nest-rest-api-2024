@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { FoodsService } from './foods.service';
@@ -10,6 +21,7 @@ import { FindDtoFood } from './dto/find_foods.dto';
 import { SearchDtoFood } from './dto/search_foods.dto';
 
 import { Foods } from '../../swagger/foods.class';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @ApiTags('foods')
 @Controller('foods')
@@ -18,17 +30,20 @@ export class FoodsController {
 
   // Create a new food
   @Post()
+  @UseGuards(AuthGuard)
   @ApiResponse({ status: 201, description: 'Created Food', type: Foods })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 404, description: 'Not Found' })
   @ApiResponse({ status: 409, description: 'Conflict' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
-  async create(@Body() body: CreateDtoFood) {
-    return await this.foodsService.create(body);
+  async create(@Body() body: CreateDtoFood, @Req() req: any) {
+    console.log(req.user);
+    return await this.foodsService.create(body, req.user.userId);
   }
 
   // Update an existing food
   @Post(':id')
+  @UseGuards(AuthGuard)
   @ApiResponse({ status: 201, description: 'Updated Food', type: Foods })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 404, description: 'Not Found' })
@@ -40,6 +55,7 @@ export class FoodsController {
 
   // Search for foods by title
   @Get('search')
+  @UseGuards(AuthGuard)
   @ApiResponse({ status: 201, description: 'Search Foods by title', type: Foods })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 404, description: 'Not Found' })
@@ -54,6 +70,7 @@ export class FoodsController {
 
   // Get all foods
   @Get()
+  @UseGuards(AuthGuard)
   @ApiResponse({ status: 201, description: 'Find All Foods', type: Foods })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 404, description: 'Not Found' })
@@ -65,6 +82,7 @@ export class FoodsController {
 
   // Get a specific food by ID
   @Get(':id')
+  @UseGuards(AuthGuard)
   @ApiResponse({ status: 201, description: 'Find One Food', type: Foods })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 404, description: 'Not Found' })
@@ -76,6 +94,7 @@ export class FoodsController {
 
   // Delete a specific food by ID
   @Delete(':id')
+  @UseGuards(AuthGuard)
   @ApiResponse({ status: 201, description: 'Delete One Food', type: Foods })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 404, description: 'Not Found' })
