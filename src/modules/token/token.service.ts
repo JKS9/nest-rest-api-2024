@@ -9,7 +9,7 @@ import { config } from 'src/configs/env.config';
 
 @Injectable()
 export class TokenService {
-  constructor(@InjectModel(Token.name) private TokenModel: Model<Token>) {}
+  constructor(@InjectModel(Token.name) private TokenModel: Model<Token>) {} // Injecting TokenModel
 
   // Create a new token
   async create(createDtoToken: CreateDtoToken, id: string) {
@@ -29,6 +29,7 @@ export class TokenService {
     return newToken;
   }
 
+  // Find a token by criteria
   async findOne(criteria: Record<string, any>) {
     return await this.TokenModel.findOne(criteria).exec();
   }
@@ -41,10 +42,12 @@ export class TokenService {
     return true;
   }
 
+  // Generate a JSON Web Token
   async generateToken(userId: string) {
     return await jwt.sign({ userId }, config().secretKey.key, { expiresIn: '6h' });
   }
 
+  // Generate a refresh token
   async generateRefreshToken() {
     return uuidv4();
   }
